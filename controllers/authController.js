@@ -15,7 +15,7 @@ exports.registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({ email, password: hashedPassword });
 
-    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '2h' });
+    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
     res.status(201).json({ message: 'User registered successfully', token });
   } catch (err) {
@@ -34,7 +34,7 @@ exports.loginUser = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '2h' });
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
     res.status(200).json({ message: 'Login successful', token });
   } catch (err) {
