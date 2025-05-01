@@ -16,6 +16,14 @@ app.use('/api/auth', authRoutes);  // For signup, login
 app.use('/api/protected', protectedRoutes);  // For the protected route
 app.use('/api/rooms', roomsRoutes);  // Handle all room-related actions
 
+// Default route (for root URL)
+app.get('/', (req, res) => {
+  res.send(`
+    <h1>🎲 Welcome to the DiceyDecisions API!</h1>
+    <p>The API is running successfully!</p>
+  `);
+});
+
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     app.listen(process.env.PORT, () => {
